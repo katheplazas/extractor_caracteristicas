@@ -63,5 +63,3 @@ while True:
                     time_end = time.time() - time_ini
                     response2 = requests.request("POST", url2+str(time_end), headers=headers, data=payload)
                     print(response.text)
-                    if cont2 == 2:
-                      break
