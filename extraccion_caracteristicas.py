@@ -4,7 +4,7 @@ import requests
 import time
 import json
 
-url = "http://sistemic.udea.edu.co:4000/seguridad/preprocesamiento/data/standardization"
+url = "http://sistemic.udea.edu.co:4000/seguridad/preprocesamiento/data/standardization/faster/10/g"
 url2 = "http://sistemic.udea.edu.co:4000/seguridad/prediccion/save/time/argus/"
 payload={}
 
