@@ -17,16 +17,16 @@ async def get_steam_reader(pipe) -> asyncio.StreamReader:
     return reader
 
 async def send_api_request(payload_queue):
-    #api_predition = "http://sistemic.udea.edu.co:4000/seguridad/preprocesamiento/data/standardization/faster/10/g" #get
-    #headers = {'Cookie': 'color=rojo','Content-Type': 'application/json'}
+    api_predition = "http://sistemic.udea.edu.co:4000/seguridad/preprocesamiento/data/standardization/faster/10/g" #get
+    headers = {'Cookie': 'color=rojo','Content-Type': 'application/json'}
 
-    #api_time_100_connection = "http://sistemic.udea.edu.co:4000/seguridad/prediccion/save/time/argus/" #post
+    api_time_100_connection = "http://sistemic.udea.edu.co:4000/seguridad/prediccion/save/time/argus/" #post
 
 
-    api_predition = "http://194.163.44.55:1880/seguridad/preprocesamiento/data/standardization/faster/10/g"
-    headers = {"Accept": "application/json", "Content-Type": "application/json"}
+    #api_predition = "http://194.163.44.55:1880/seguridad/preprocesamiento/data/standardization/faster/10/g"
+    #headers = {"Accept": "application/json", "Content-Type": "application/json"}
 
-    api_time_100_connection = "http://194.163.44.55:1880/seguridad/prediccion/save/time/argus/"
+    #api_time_100_connection = "http://194.163.44.55:1880/seguridad/prediccion/save/time/argus/"
     
     async with aiohttp.ClientSession() as session:
         while True:
@@ -34,11 +34,11 @@ async def send_api_request(payload_queue):
             data = await payload_queue.get()
             payload = json.dumps(data)
             try:
-                async with session.post(api_predition, headers=headers, data=payload) as response:
+                async with session.get(api_predition, headers=headers, data=payload) as response:
                     status = await response.text()
                     time_end = time.time() - time_ini
-                    #print(status)
-                    print(time_end)
+                    print(status)
+                    #print(time_end)
                     payload2 = {"time": time_end}
                 async with session.post(api_time_100_connection, headers=headers, data = json.dumps(payload2)) as response:
                     status = await response.text()
@@ -82,7 +82,7 @@ async def main():
             if float(list_data[10]) == 0.0:
                 list_data[10] = "0.000001"
 
-            data.loc[count_data] = list_data    
+            data.loc[count_data] = list_data
             count_data = count_data + 1
             if count_data == 100:
                 count_data = 0
